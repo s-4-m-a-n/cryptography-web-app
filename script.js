@@ -170,13 +170,40 @@ function playFairEncryption(plaintxt,keyValue){
 function playFairEncryption(plaintxt,keyValue){
 
 	var mappingKey = getMappingKey(keyValue); //returns 2d mapping key 
-	var plaintxt = splitIntoPairs(plaintxt);
+		plaintxt = plaintxt.split('J').join('I'); //replacing all 'J's by 'I's
+	    plaintxt = splitIntoPairs(plaintxt);  // pairing two words ; returns array;
+    var ciphertxt = '';
+    var firstLetter ;
+    var secondLetter;
+    var indexOfFirst;
+    var indexOfSecond;
 
-console.log(plaintxt);
+    for (i = 0 ; i < plaintxt.length ; i++){
+    		firstLetter = plaintxt[i][0];
+    		secondLetter = plaintxt[i][1];
 
+    		indexOfFirst = getIndexOf(mappingKey,firstLetter);
+    		indexOfSecond = getIndexOf(mappingKey,secondLetter);
 
+    		if (indexOfFirst.row == indexOfSecond.row) { //same row
+    				ciphertxt += mappingKey[indexOfFirst.row][(indexOfFirst.col+1)%5];
+    				ciphertxt += mappingKey[indexOfSecond.row][(indexOfSecond.col+1)%5];
+    			}
+    		else if (indexOfFirst.col == indexOfSecond.col){ //same colm
+    				ciphertxt += mappingKey[(indexOfFirst.row])%5][indexOfFirst.col];
+    				ciphertxt += mappingKey[(indexOfSecond.row+1)%5][indexOfSecond.col];
+    		}
+    		else{  // adjacent
+    				ciphertxt += mappingKey[indexOfFirst.row][indexOfSecond.col];
+    				ciphertxt += mappingKey[indexOfSecond.row][indexOfFirst.col];
+    		}
 
-	}
+   	}
+   
+   console.out(ciphertxt);
+
+   }
+
 
 
 
@@ -314,17 +341,32 @@ function splitIntoPairs(plaintxt){
 	 var pairText = new Array();
 	 var index = 0;
 
-	if (plaintxt.length % 2 == 0 )  // for odd length text , an additional char 'z' is added at the end of the word
+	if (plaintxt.length % 2 != 0 )  // for odd length text , an additional char 'z' is added at the end of the word
 		plaintxt += 'Z';
 
-	for (i = 0 ; i < plaintxt.length-1; i+2){
+	for (i = 0 ; i < (plaintxt.length-1); i=i+2){
 
-		if (plaintxt[i] == plaintxt[i+1])
-			pairText[index++] = plaintxt[i--]+'X';   
+		if (plaintxt[i] == plaintxt[i+1]){
+			pairText[index++] = plaintxt[i]+'X';  
+			i--; 
+		}
 
 		else
 			pairText[index++] = plaintxt[i]+plaintxt[i+1];
 	}
 
 	return pairText;
+}
+
+
+
+
+function getIndexOf(mappingKey,value){
+		for (i = 0 ; i < mappingKey.length ; i++){
+			for(j = 0 ; j < mappingKey[0].length ; j++ )
+						if (value == mappingKey[i][j]){
+								return {'row':i , 'col':j};
+						
+						}
+		}
 }
