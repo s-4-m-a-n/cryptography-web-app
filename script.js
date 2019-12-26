@@ -8,7 +8,8 @@ var resultShow =  document.getElementById('result');
 var cipherText2 = document.getElementById('cipherText2');
 var analyseBtn = document.getElementById('analyseBtn');
 var processing = document.getElementById('process');
-
+var result2 = document.getElementById('result2');
+var selectedChar = document.getElementById('highestFrequencyChar');
 
 
 
@@ -20,11 +21,12 @@ function encryption(){
 	
 	switch(encryptionType){
 	
-			case "crips":
-							cripsEncryption(plainText,keyValue);
+			case "ceasar":
+							var ciphertxt = ceasarEncryption(plainText,keyValue);
+							resultShow.innerText = ciphertxt;
 							break;
-			case "next":
-							alert("error");
+			case "poly":
+							;
 							break;
 				
 			default :
@@ -44,8 +46,9 @@ function decryption(){
 	var cipherText = document.getElementById('cipherText').value; 
 
 	switch(encryptionType){
-		case "crips":
-				cripsDecryption(cipherText,keyValue);
+		case "ceasar":
+				var plaintxt = ceasarDecryption(cipherText,keyValue);
+				resultShow.innerText = plaintxt;
 				break;
 		case "next":
 				alert("error");
@@ -63,9 +66,14 @@ function decryption(){
 function startCryptAnalysis(){
 	var encryptionType = document.querySelector('input[name="cipher"]:checked').value;
 	var ciphertxt = cipherText2.value;
+
+	var  highestFrequencyChar = selectedChar.value;
+
+
 	switch(encryptionType){
 
-		case "crips": cripsCryptAnalysis(ciphertxt);
+		case "ceasar":  ceasarCryptAnalysis(ciphertxt); 
+						frequencyAnalysis(ciphertxt,highestFrequencyChar);
 							break;
 		case "next" : 
 						alert("ok !1");
@@ -116,18 +124,18 @@ function enableBtn(){
 //-------------------------------------------------------
 //-----------------algorithms ------------------------
 //-----------------------------------------------------
-function cripsEncryption(plainText,keyValue){
+function ceasarEncryption(plainText,keyValue){
 	var ciphertxt ='' ;
 	for( i = 0; i < plainText.length ; i++){
 			ciphertxt += String.fromCharCode(((Number((plainText[i]).toUpperCase().charCodeAt(0))-65)+keyValue)%26 + 65);
 			}
 
-		resultShow.innerText = ciphertxt;
 
+		return ciphertxt;
 		}
 
 
-function cripsDecryption(cipherText,keyValue){
+function ceasarDecryption(cipherText,keyValue){
 
 	var plaintxt ='' ;
 	
@@ -137,12 +145,12 @@ function cripsDecryption(cipherText,keyValue){
 
 	}
 
-	resultShow.innerText = plaintxt;
+	return plaintxt;
 }
 	
 
 
-function cripsCryptAnalysis(cipherText){
+function ceasarCryptAnalysis(cipherText){
 	var plaintxt;
 	processing.value = ''; //processing display box 
 	for (keyValue = 0 ; keyValue < 26 ; keyValue++){
@@ -153,4 +161,42 @@ function cripsCryptAnalysis(cipherText){
 	processing.value += plaintxt + ", ";
 
 	}
+}
+
+function frequencyAnalysis(cipherText,letter){ //char highest frequency character 
+	var frqCount ={};
+	var key;
+	for (i = 0 ; i < cipherText.length ; i++ ){  //counting the frequency of the char in cipherText
+		key = cipherText[i];
+			if (key in frqCount)
+					frqCount[key]++;
+			else
+				frqCount[key] = 1; 
+	}
+
+
+	//key having highest frequency
+
+	var highestFrqChar ; //highest frequency character
+	var highestFrq = 0;
+	for (key in frqCount){
+		if (frqCount[key] > highestFrq){
+			highestFrqChar = key;
+			highestFrq = frqCount[key];
+		}
+	}
+
+	//////
+
+	// 'e' is the english letter that has a highest frequency . so highestFreqChar has the highest chance of being an 'e'.
+	//ascii value of e = 69;
+
+	var keyValue = Math.abs(letter.toUpperCase().charCodeAt() - Number( highestFrqChar.toUpperCase().charCodeAt() ) );
+
+	console.log(keyValue);
+	var possiblePlainText = ceasarDecryption(cipherText,keyValue);
+	
+	result2.innerText= possiblePlainText;
+
+
 }
