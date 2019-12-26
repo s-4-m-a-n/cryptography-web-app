@@ -1,0 +1,73 @@
+body{
+	font-family:Arial;
+	overflow: hidden;
+	height: 100%;
+	padding: 0px;
+	margin:0px; 
+}
+#side-bar {
+	position: absolute;
+	margin-left: 76%;
+	margin-right: 4%;
+	border: 1px solid black;
+	width: 20%;
+	padding : 10px; 
+}
+
+#side-bar dt {
+	font-weight:bolder;
+	text-decoration: underline;
+}
+
+#main{
+	position: relative;
+	width:69%;
+	height: 240px;
+	margin-left:2%;
+	border: 1px solid black;
+	margin-top: 1%;
+	padding-top: 0px;
+	padding-left: 5%;
+
+}
+#main table{
+	position : relative;
+}
+
+
+
+#key{
+	width :30px ;
+}
+
+#cryptanalyst{
+	position: relative;
+	margin-left: 2%;
+	/*border: 1px solid black;*/
+	width:72%;
+	height: 260px;
+	overflow: hidden;
+	padding-left: 2%;
+}
+#processing{
+	position: absolute;
+	margin-left: 40%;
+	color: green; 
+
+
+}
+#inputs{
+
+	position : absolute;
+	width: 35%;
+	margin-top: 7%;
+}
+
+
+h3{
+	margin:0px; 
+	margin-left: 5%;
+	margin-top: 10px;
+	padding-bottom: 10px;
+	letter-spacing: 2px;
+}

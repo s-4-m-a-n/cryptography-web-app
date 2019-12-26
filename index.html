@@ -1,0 +1,114 @@
+<!-- // _%= -->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset ="UTF-8">
+	<meta name = "viewport" content="width = device-width, initial-scale =1.0">
+	<title>encryption and decryption</title>
+</head>
+<body>
+	<div id='side-bar'>
+		<dl>
+			<dt><h3>Encryption Type:</h3></dt>
+			<hr/>
+		<dd><input type='radio' name= 'cipher' value='crips' checked/> crips</dd>
+		<hr/>
+		<dd><input type='radio' name= 'cipher' value='next'>unknown</dd><hr/>
+		<dd><input type='radio' name= 'cipher' value=''>unknown</dd><hr/>
+		<dd><input type='radio' name= 'cipher' value=''>unknown</dd><hr/>
+		<dd><input type='radio' name= 'cipher' value=''>unknown</dd><hr/>
+		<dd><input type='radio' name= 'cipher' value=''>unknown</dd>
+		</dl>
+	</div>
+
+
+	<div id='main'>
+		<table  border="0" cellpadding="0" cellspacing="20">
+			<tr>
+			<td colspan="4"><label for=	"key">key: </label><input type="text" name="key" id="key" placeholder="enter key value" value='3' required/></td>
+			</tr>
+
+			<tr>
+				<td>
+			<lable for='plainText'>Plain Text</lable></td>
+			<td>
+			<input type="text" name="plainText" id="plainText" onkeyup="disableDecrypt()" maxlength="15" style="width:100%"/></td>
+			<td>
+			<lable for='cipherText'>Cipher Text</lable></td>
+			<td>
+			<input type="text" name="cipherText" id="cipherText" onkeyup="disableEncrypt()" maxlength="15" style="width:100%"/></td></tr>
+			<tr>
+				<td colspan="2">
+			<button type="button" name="encrypt" id="encryptBtn" class="cryptography" onclick="encryption()" disabled>Encrypt</button></td>
+			<td colspan="2"> 
+			<button type="button" name="decrypt" id="decryptBtn" class="cryptography" onclick="decryption()" disabled>Decrypt</button></td></tr>
+			<tr>
+				<td colspan="4"><h2 id ='result' style="margin-left: 30%;letter-spacing: 20px;font-family: monospace;font-size: 30px;">Result</h2></td>
+			</tr>
+
+		</table>
+	</div>
+
+	<h3>CRYPTANALYSIS</h3>
+
+	<div id="cryptanalyst">
+
+		<div id="inputs">
+			<lable>cipher Text : &nbsp &nbsp</lable>
+			<input type ="text" name = 'cipherText2' id="cipherText2" placeholder="enter cipher Text" onkeyup="enableBtn()" required/><br/><br/>
+			<center><button type="button" name="analyseBtn" id="analyseBtn" onclick="startCryptAnalysis()" disabled >ANALYSE</button></center>
+	    </div>
+
+		<div id="processing">
+			<textarea id ="process" rows="20" cols="50" style = "color:#024514;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id Loremtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id Loremtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id Loremtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id Loremtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id Lorem </textarea>
+		</div>
+	</div>
+	<h3>Result : </h3>
+
+
+
+	
+
+
+<link rel='stylesheet' type="text/css" href="style.css" />
+<script  src="script.js"></script>
+
+</body>
+</html>
+
