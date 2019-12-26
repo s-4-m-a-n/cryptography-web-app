@@ -11,9 +11,9 @@
 		<dl>
 			<dt><h3>Encryption Type:</h3></dt>
 			<hr/>
-		<dd><input type='radio' name= 'cipher' value='crips' checked/> crips</dd>
+		<dd><input type='radio' name= 'cipher' value='ceasar' checked/>ceasar</dd>
 		<hr/>
-		<dd><input type='radio' name= 'cipher' value='next'>unknown</dd><hr/>
+		<dd><input type='radio' name= 'cipher' value='poly'>polysubstitution</dd><hr/>
 		<dd><input type='radio' name= 'cipher' value=''>unknown</dd><hr/>
 		<dd><input type='radio' name= 'cipher' value=''>unknown</dd><hr/>
 		<dd><input type='radio' name= 'cipher' value=''>unknown</dd><hr/>
@@ -46,7 +46,7 @@
 			<button type="button" name="decrypt" id="decryptBtn" class="cryptography" onclick="decryption()" disabled>Decrypt</button></td></tr>
 			
 		</table>
-			<h2 id ='result' align="center" style="letter-spacing: 20px;font-family: monospace;font-size: 30px;padding : 0;padding-left:-7px;position: relative;color:#54000f;padding-top: 10px">Result</h2>
+			<h2 id ='result' align="center" style="letter-spacing: 20px;font-family: monospace;font-size: 30px;padding : 0;padding-left:-7px;position: relative;color:#54000f;">Result</h2>
 
 	</div>
 
@@ -55,16 +55,31 @@
 	<div id="cryptanalyst">
 
 		<div id="inputs">
+			<label>Highest frequency character :&nbsp &nbsp </label>
+			<select id='highestFrequencyChar'>
+				<option name='e' value='e' selected>'e'  12.7</option>
+				<option name='t' value='t'>'t'  9.1</option>
+				<option name='a' value='a'>'a'  8.2</option>
+				<option name='o' value='o'>'o'  7.5</option>
+				<option name='i' value='i'>'i'  7.0</option>
+				<option name='n' value='n'>'n'  6.7</option>
+				<option name='s' value='s'>'s'  6.3</option>
+				<option name='h' value='h'>'h'  6.1</option>
+				<option name='r' value='r'>'r'  6.0</option>
+				<option name='d' value='d'>'d'  4.3</option>
+			</select>
+			<br/><br/>
 			<lable>cipher Text : &nbsp &nbsp</lable>
 			<input type ="text" name = 'cipherText2' id="cipherText2" placeholder="enter cipher Text" onkeyup="enableBtn()" value="DTXLFNEURZQIRAMXPSRYHU" required/><br/><br/>
 			<center><button type="button" name="analyseBtn" id="analyseBtn" onclick="startCryptAnalysis()" disabled >ANALYSE</button></center>
+
 	    </div>
 
 		<div id="processing">
 			<textarea id ="process" rows="20" cols="50" style = "color:#024514;padding:20px;line-height:20px;word-spacing: 10px ; border : 2px solid red; height: 84%;width:100%; ">DTXLFNEURZQIRAMXPSRYHU, CSWKEMDTQYPHQZLWORQXGT, BRVJDLCSPXOGPYKVNQPWFS, AQUICKBROWNFOXJUMPOVER, ZPTHBJAQNVMENWITLONUDQ, YOSGAIZPMULDMVHSKNMTCP, XNRFZHYOLTKCLUGRJMLSBO, WMQEYGXNKSJBKTFQILKRAN, VLPDXFWMJRIAJSEPHKJQZM, UKOCWEVLIQHZIRDOGJIPYL, TJNBVDUKHPGYHQCNFIHOXK, SIMAUCTJGOFXGPBMEHGNWJ, RHLZTBSIFNEWFOALDGFMVI, QGKYSARHEMDVENZKCFELUH, PFJXRZQGDLCUDMYJBEDKTG, OEIWQYPFCKBTCLXIADCJSF, NDHVPXOEBJASBKWHZCBIRE, MCGUOWNDAIZRAJVGYBAHQD, LBFTNVMCZHYQZIUFXAZGPC, KAESMULBYGXPYHTEWZYFOB, JZDRLTKAXFWOXGSDVYXENA, IYCQKSJZWEVNWFRCUXWDMZ, HXBPJRIYVDUMVEQBTWVCLY, GWAOIQHXUCTLUDPASVUBKX, FVZNHPGWTBSKTCOZRUTAJW, EUYMGOFVSARJSBNYQTSZIV, </textarea>
 		</div>
 	</div>
-	<h3>Result : </h3>
+	<h3 >POSSIBLE PLAIN TEXT :<span id='result2' style="color:red;"></span></h3>
 
 
 
