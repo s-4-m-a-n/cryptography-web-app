@@ -16,7 +16,7 @@ var selectedChar = document.getElementById('highestFrequencyChar');
 
 function encryption(){
 	var encryptionType = document.querySelector('input[name="cipher"]:checked').value;
-	var keyValue = Number(document.getElementById('key').value);
+	var keyValue = document.getElementById('key').value;
 	var plainText = document.getElementById('plainText').value;
 	
 	switch(encryptionType){
@@ -25,9 +25,9 @@ function encryption(){
 							var ciphertxt = ceasarEncryption(plainText,keyValue);
 							resultShow.innerText = ciphertxt;
 							break;
-			case "poly":
-							;
-							break;
+			case "playFair":
+								playFairEncryption(plainText,keyValue);
+								break;
 				
 			default :
 						alert("error");
@@ -50,7 +50,7 @@ function decryption(){
 				var plaintxt = ceasarDecryption(cipherText,keyValue);
 				resultShow.innerText = plaintxt;
 				break;
-		case "next":
+		case "playFair":
 				alert("error");
 				break;
 		default :
@@ -124,6 +124,64 @@ function enableBtn(){
 //-------------------------------------------------------
 //-----------------algorithms ------------------------
 //-----------------------------------------------------
+
+/*
+function playFairEncryption(plaintxt,keyValue){
+		var mappingKey = new Array(5);
+		for (i = 0 ; i < 5 ; i++){
+			mappingKey[i] = new Array(5);
+		}
+
+		var keyValuePtr = 0;
+		var pointerChar = 'A'; 
+		for (i = 0 ; i < 5 ; i++){
+			for (j = 0 ; j < 5 ; j++){
+				 console.log(keyValue[i*5+j]);
+				 if ( keyValue[keyValuePtr] != undefined && !mappingKey.some(row => row.includes(keyValue[keyValuePtr].toUpperCase())) )
+				 {
+
+				 		if ((mappingKey.some(row => row.includes('I')) && keyValue[keyValuePtr] == 'J') || (mappingKey.some(row => row.includes('J')) && keyValue[keyValuePtr] =='I'))
+				 				continue;
+
+					mappingKey[i][j]= keyValue[keyValuePtr].toUpperCase(); 
+
+				 }
+
+				 else{
+				 		if (keyValue[keyValuePtr] != undefined)
+				 			continue;
+
+				 		while( (mappingKey.some(row => row.includes(pointerChar))) || (mappingKey.some(row => row.includes('I')) && pointerChar == 'J') ||(mappingKey.some(row => row.includes('J')) && pointerChar == 'I' ) )
+				 			{	
+				 				pointerChar = String.fromCharCode(Number(pointerChar.toUpperCase().charCodeAt()) + 1 ); 
+				 				console.log("ok");
+				 			}
+				 		mappingKey[i][j] = pointerChar;
+				 }
+
+			}
+		}
+
+		console.log(mappingKey);
+}
+*/
+
+
+function playFairEncryption(plaintxt,keyValue){
+
+	var mappingKey = getMappingKey(keyValue); //returns 2d mapping key 
+	var plaintxt = splitIntoPairs(plaintxt);
+
+console.log(plaintxt);
+
+
+
+	}
+
+
+
+
+
 function ceasarEncryption(plainText,keyValue){
 	var ciphertxt ='' ;
 	for( i = 0; i < plainText.length ; i++){
@@ -133,6 +191,7 @@ function ceasarEncryption(plainText,keyValue){
 
 		return ciphertxt;
 		}
+
 
 
 function ceasarDecryption(cipherText,keyValue){
@@ -186,8 +245,6 @@ function frequencyAnalysis(cipherText,letter){ //char highest frequency characte
 		}
 	}
 
-	//////
-
 	// 'e' is the english letter that has a highest frequency . so highestFreqChar has the highest chance of being an 'e'.
 	//ascii value of e = 69;
 
@@ -199,4 +256,75 @@ function frequencyAnalysis(cipherText,letter){ //char highest frequency characte
 	result2.innerText= possiblePlainText;
 
 
+}
+
+
+
+//-----------------------------other functions------------------------------------------------------
+
+function getMappingKey(keyValue){
+
+	var alphabet = [];
+	var index = 0;
+	keyValue = keyValue.toUpperCase();
+	//*initializing alphabet :
+
+	for(i = 0 ; i < 26 ; i++){
+		if (i == 9)
+			continue;
+
+		alphabet[index++] = String.fromCharCode(i+65);
+	}
+	// removing repeating char form keyValue
+		var set = new Set(keyValue);
+		keyValue = Array.from(set);
+
+	// removing keyValue item from alphabet 
+		alphabet = alphabet.filter(x => !keyValue.includes(x))
+
+	// creating mappingKey 
+		//declaring 2d mappingKey
+
+		var mappingKey  = new Array(5);
+		var alphabetPtr  = 0;
+
+		for (i  = 0 ; i < 5 ; i++)
+			mappingKey[i]  = new Array(5);
+
+	// initializing mappingKey
+
+		for (i  = 0 ; i < 5 ; i++){
+			for (j  = 0 ; j < 5 ; j++){
+					if (keyValue[i*5+j] != undefined)
+						mappingKey[i][j]  = keyValue[i*5+j];
+					else
+						mappingKey[i][j]  = alphabet[alphabetPtr++];
+
+			}
+		}
+
+		return mappingKey;
+
+}
+
+
+
+function splitIntoPairs(plaintxt){
+	 plaintxt = plaintxt.toUpperCase();
+	 var pairText = new Array();
+	 var index = 0;
+
+	if (plaintxt.length % 2 == 0 )  // for odd length text , an additional char 'z' is added at the end of the word
+		plaintxt += 'Z';
+
+	for (i = 0 ; i < plaintxt.length-1; i+2){
+
+		if (plaintxt[i] == plaintxt[i+1])
+			pairText[index++] = plaintxt[i--]+'X';   
+
+		else
+			pairText[index++] = plaintxt[i]+plaintxt[i+1];
+	}
+
+	return pairText;
 }
