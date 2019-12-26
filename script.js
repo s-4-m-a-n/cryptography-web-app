@@ -82,7 +82,7 @@ function enableBtn(){
 function startCryptAnalysis(){
 	
 	var plaintxt;
-	processing.value = ' ';
+	processing.value = '';
 	for (keyValue = 0 ; keyValue < 26 ; keyValue++){
 		plaintxt = ''; 
 

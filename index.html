@@ -32,21 +32,20 @@
 				<td>
 			<lable for='plainText'>Plain Text</lable></td>
 			<td>
-			<input type="text" name="plainText" id="plainText" onkeyup="disableDecrypt()" maxlength="15" style="width:100%"/></td>
+			<input type="text" name="plainText" id="plainText" onkeyup="disableDecrypt()" maxlength="22" style="width:100%"/></td>
 			<td>
 			<lable for='cipherText'>Cipher Text</lable></td>
 			<td>
-			<input type="text" name="cipherText" id="cipherText" onkeyup="disableEncrypt()" maxlength="15" style="width:100%"/></td></tr>
+			<input type="text" name="cipherText" id="cipherText" onkeyup="disableEncrypt()" maxlength="22" style="width:100%"/></td></tr>
 			<tr>
 				<td colspan="2">
 			<button type="button" name="encrypt" id="encryptBtn" class="cryptography" onclick="encryption()" disabled>Encrypt</button></td>
 			<td colspan="2"> 
 			<button type="button" name="decrypt" id="decryptBtn" class="cryptography" onclick="decryption()" disabled>Decrypt</button></td></tr>
-			<tr>
-				<td colspan="4"><h2 id ='result' style="margin-left: 30%;letter-spacing: 20px;font-family: monospace;font-size: 30px;">Result</h2></td>
-			</tr>
-
+			
 		</table>
+			<h2 id ='result' align="center" style="letter-spacing: 20px;font-family: monospace;font-size: 30px;padding : 0;padding-left:-7px;position: relative">Result</h2>
+
 	</div>
 
 	<h3>CRYPTANALYSIS</h3>
@@ -55,48 +54,12 @@
 
 		<div id="inputs">
 			<lable>cipher Text : &nbsp &nbsp</lable>
-			<input type ="text" name = 'cipherText2' id="cipherText2" placeholder="enter cipher Text" onkeyup="enableBtn()" required/><br/><br/>
+			<input type ="text" name = 'cipherText2' id="cipherText2" placeholder="enter cipher Text" onkeyup="enableBtn()" value="DTXLFNEURZQIRAMXPSRYHU" required/><br/><br/>
 			<center><button type="button" name="analyseBtn" id="analyseBtn" onclick="startCryptAnalysis()" disabled >ANALYSE</button></center>
 	    </div>
 
 		<div id="processing">
-			<textarea id ="process" rows="20" cols="50" style = "color:#024514;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id Loremtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id Loremtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id Loremtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id Loremtempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id Lorem </textarea>
+			<textarea id ="process" rows="20" cols="50" style = "color:#024514;padding:20px;line-height:20px;word-spacing: 10px ; border : 2px solid red; height: 84%;width:100%; ">DTXLFNEURZQIRAMXPSRYHU, CSWKEMDTQYPHQZLWORQXGT, BRVJDLCSPXOGPYKVNQPWFS, AQUICKBROWNFOXJUMPOVER, ZPTHBJAQNVMENWITLONUDQ, YOSGAIZPMULDMVHSKNMTCP, XNRFZHYOLTKCLUGRJMLSBO, WMQEYGXNKSJBKTFQILKRAN, VLPDXFWMJRIAJSEPHKJQZM, UKOCWEVLIQHZIRDOGJIPYL, TJNBVDUKHPGYHQCNFIHOXK, SIMAUCTJGOFXGPBMEHGNWJ, RHLZTBSIFNEWFOALDGFMVI, QGKYSARHEMDVENZKCFELUH, PFJXRZQGDLCUDMYJBEDKTG, OEIWQYPFCKBTCLXIADCJSF, NDHVPXOEBJASBKWHZCBIRE, MCGUOWNDAIZRAJVGYBAHQD, LBFTNVMCZHYQZIUFXAZGPC, KAESMULBYGXPYHTEWZYFOB, JZDRLTKAXFWOXGSDVYXENA, IYCQKSJZWEVNWFRCUXWDMZ, HXBPJRIYVDUMVEQBTWVCLY, GWAOIQHXUCTLUDPASVUBKX, FVZNHPGWTBSKTCOZRUTAJW, EUYMGOFVSARJSBNYQTSZIV, </textarea>
 		</div>
 	</div>
 	<h3>Result : </h3>
