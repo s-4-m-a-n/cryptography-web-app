@@ -21,7 +21,7 @@ body{
 
 #main{
 	position: relative;
-	width:69%;
+	width:65%;
 	height: 240px;
 	margin-left:2%;
 	border: 1px solid black;
@@ -31,13 +31,14 @@ body{
 
 }
 #main table{
-	position : relative;
+	width:90%;
+	padding: 0;
 }
 
 
 
 #key{
-	width :30px ;
+	width :15% ;
 }
 
 #cryptanalyst{
@@ -45,15 +46,16 @@ body{
 	margin-left: 2%;
 	/*border: 1px solid black;*/
 	width:72%;
-	height: 260px;
+	height: 290px;
 	overflow: hidden;
 	padding-left: 2%;
 }
 #processing{
 	position: absolute;
 	margin-left: 40%;
-	color: green; 
-
+	/*border: 1px solid green;*/
+	height : 100%;
+	padding-right: 6%;
 
 }
 #inputs{
@@ -67,7 +69,8 @@ body{
 h3{
 	margin:0px; 
 	margin-left: 5%;
-	margin-top: 10px;
 	padding-bottom: 10px;
 	letter-spacing: 2px;
+	color: blue;
+	padding-top: 10px;
 }
