@@ -18,21 +18,23 @@ function encryption(){
 	var encryptionType = document.querySelector('input[name="cipher"]:checked').value;
 	var keyValue = document.getElementById('key').value;
 	var plainText = document.getElementById('plainText').value;
-	
+	var ciphertxt;
 	switch(encryptionType){
 	
 			case "ceasar":
-							var ciphertxt = ceasarEncryption(plainText,keyValue);
-							resultShow.innerText = ciphertxt;
+							 ciphertxt = ceasarEncryption(plainText,keyValue);
 							break;
 			case "playFair":
-								playFairEncryption(plainText,keyValue);
+							 ciphertxt = playFairEncryption(plainText,keyValue);
 								break;
 				
 			default :
 						alert("error");
 
 		}
+
+
+		resultShow.innerText = ciphertxt;
 
 }
 
@@ -168,17 +170,22 @@ function playFairEncryption(plaintxt,keyValue){
 
 
 function playFairEncryption(plaintxt,keyValue){
+		
+		plaintxt = plaintxt.toUpperCase().split('J').join('I'); //replacing all 'J's by 'I's  
+	    plaintxt = splitIntoPairs(plaintxt);  // pairing two words ; returns array;
 
 	var mappingKey = getMappingKey(keyValue); //returns 2d mapping key 
-		plaintxt = plaintxt.split('J').join('I'); //replacing all 'J's by 'I's
-	    plaintxt = splitIntoPairs(plaintxt);  // pairing two words ; returns array;
     var ciphertxt = '';
     var firstLetter ;
     var secondLetter;
     var indexOfFirst;
     var indexOfSecond;
 
-    for (i = 0 ; i < plaintxt.length ; i++){
+    console.log(plaintxt);
+    console.log(mappingKey);
+
+    for (var i = 0 ; i < plaintxt.length ; i++) {
+    		
     		firstLetter = plaintxt[i][0];
     		secondLetter = plaintxt[i][1];
 
@@ -190,7 +197,7 @@ function playFairEncryption(plaintxt,keyValue){
     				ciphertxt += mappingKey[indexOfSecond.row][(indexOfSecond.col+1)%5];
     			}
     		else if (indexOfFirst.col == indexOfSecond.col){ //same colm
-    				ciphertxt += mappingKey[(indexOfFirst.row])%5][indexOfFirst.col];
+    				ciphertxt += mappingKey[(indexOfFirst.row+1)%5][indexOfFirst.col];
     				ciphertxt += mappingKey[(indexOfSecond.row+1)%5][indexOfSecond.col];
     		}
     		else{  // adjacent
@@ -200,7 +207,7 @@ function playFairEncryption(plaintxt,keyValue){
 
    	}
    
-   console.out(ciphertxt);
+   return ciphertxt;
 
    }
 
@@ -294,6 +301,7 @@ function getMappingKey(keyValue){
 	var alphabet = [];
 	var index = 0;
 	keyValue = keyValue.toUpperCase();
+	keyValue = keyValue.split('J').join('I'); //replacing all 'J's by 'I's
 	//*initializing alphabet :
 
 	for(i = 0 ; i < 26 ; i++){
