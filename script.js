@@ -54,15 +54,17 @@ function decryption(){
 	var keyValue;
 	switch(encryptionType){
 		case "ceasar":
-				keyValue = Number(document.getElementById('key').value); //takes number only 
-				plaintxt = ceasarDecryption(cipherText,keyValue);
-				break;
+						keyValue = Number(document.getElementById('key').value); //takes number only 
+						plaintxt = ceasarDecryption(cipherText,keyValue);
+							break;
 		case "playFair":
-				keyValue = document.getElementById('key').value;
-				plaintxt = playFairDecryption(cipherText,keyValue);
-				break;
-		default :
-				alert("error");
+						keyValue = document.getElementById('key').value;
+						plaintxt = playFairDecryption(cipherText,keyValue);
+							break;
+		case "hillCipher":
+						keyValue = document.getElementById('key').value;
+						plaintxt = hillDecryption(cipherText,keyValue);
+							break;
 	}
 
 	resultShow.innerText = plaintxt;
@@ -176,25 +178,96 @@ function playFairEncryption(plaintxt,keyValue){
 }
 */
 
-function hillEncryption(plaintxt,keyValue){
-	plaintxt = plaintxt.toUpperCase();
+function hillDecryption(ciphertxt,keyValue){
+		ciphertxt = ciphertxt.toUpperCase();
 
-	if (plaintxt.length % 2 != 0 )
-		plaintxt +='Z';
+		var keyValueMatrix = getHillKey(keyValue);
+
+		var determinantOfKey = getDeterminant(keyValueMatrix,keyValueMatrix.length);
+
+	/*checking for the legality of determinant 
+		1. shouldn't be zero
+		2. determinant and 26 must be co-prime
+	*/
+	//-------------------------------
+			if (determinantOfKey == 0 || !isCoprime(determinantOfKey,26)|| (keyValueMatrix.length != keyValueMatrix[0].length /*row != cols*/)){
+					alert("illegal key");
+					return cipherText='Result';
+			}
+
+	//------------------------------
+
+	var inverseOfKey = getInverseOfMatrix(keyValueMatrix,determinantOfKey);
 
 
-	var keyValueMatrix = getHillKey(keyValue); //returns 2d matrix (Array)
+	// finding product of inverseOfKey and cipherTextMatrix
 
-
-
-	var determinantOfKey = getDeterminant(keyValueMatrix/* array */,keyValueMatrix.length);
-	var plainTextMatrix = create2dArray(2);
+	var cipherTextMatrix = create2dArray(keyValueMatrix.length);
 	var index = 0;
-	var index2 = 0; 
-	var product; // store the product of key and text;
+
+	var productOfKeyAndText; // store the product of key and text;
+	var plainText = '';
+	while (index < ciphertxt.length){
+
+		for(var i = 0 ; i < keyValueMatrix.length; i++) {// loop 0 to n (no of rows)
+			//converting ascii code into number
+			cipherTextMatrix[i][0] = (ciphertxt[index++].charCodeAt()-65);
+		}
+
+			productOfKeyAndText = matrixMultiplication(inverseOfKey,cipherTextMatrix);
+			// converting number into ascii code
+
+		for(var i = 0 ; i < keyValueMatrix.length; i++) {// loop 0 to n (no of rows)
+			//converting ascii code into number
+			plainText += String.fromCharCode(productOfKeyAndText[i][0]+65);
+		}
+
+	}
+
+	return plainText;
+}
+
+
+
+
+
+
+function hillEncryption(plaintxt,keyValue){
+	
+	plaintxt = plaintxt.toUpperCase();
+	var keyValueMatrix = getHillKey(keyValue); //returns 2d matrix (Array) --converting string fromat into array 
+
+
+	if (plaintxt.length % keyValueMatrix.length != 0 ){
+		var remLength = plaintxt.length % keyValueMatrix.length;
+		for(var i = 0 ; i < remLength ; i++ )
+				plaintxt +='Z';
+	}
+
+
+	
+
+
+	var determinantOfKey =Math.abs(getDeterminant(keyValueMatrix/* array */,keyValueMatrix.length));
+
+	/*checking for the legality of determinant 
+		1. shouldn't be zero
+		2. determinant and 26 must be co-prime
+	*/
+	//-------------------------------
+			if (determinantOfKey == 0 || !isCoprime(determinantOfKey,26)|| (keyValueMatrix.length != keyValueMatrix[0].length /*row != cols*/)){
+					alert("illegal key");
+					return cipherText='Result';
+			}
+
+	//------------------------------
+
+	var plainTextMatrix = create2dArray(keyValueMatrix.length);
+	var index = 0;
+	var productOfKeyAndText; // store the product of key and text;
 	var cipherText = '';
 	while (index < plaintxt.length){
-		for(i = 0 ; i < keyValueMatrix.length; i++) {// loop 0 to n (no of rows)
+		for(var i = 0 ; i < keyValueMatrix.length; i++) {// loop 0 to n (no of rows)
 			//converting ascii code into number
 			plainTextMatrix[i][0] = (plaintxt[index++].charCodeAt()-65);
 		}
@@ -203,7 +276,7 @@ function hillEncryption(plaintxt,keyValue){
 
 			// converting number into ascii code
 
-		for(i = 0 ; i < keyValueMatrix.length; i++) {// loop 0 to n (no of rows)
+		for(var i = 0 ; i < keyValueMatrix.length; i++) {// loop 0 to n (no of rows)
 			//converting ascii code into number
 			cipherText += String.fromCharCode(productOfKeyAndText[i][0]+65);
 		}
@@ -214,22 +287,6 @@ function hillEncryption(plaintxt,keyValue){
 }
 
 
-function matrixMultiplication(key,text){  // both key and text are matrix
-		var length = key.length;
-		var product = create2dArray(length);
-		var temp;
-		for (i = 0; i < length ; i++){
-			temp = 0;
-			for (j = 0 ; j < length ; j++){
-				temp += key[i][j]*text[j][0];
-			}
-			product[i][0] = temp % 26;
-
-		}
-
-		return product;
-
-}
 
 
 
@@ -461,7 +518,7 @@ function getHillKey(keyValue){  // for hill cipher
 
 //-----------------------------
 	keyValue = Normalizing(keyValue);
-	console.log(keyValue);
+	
 	var rows = Math.sqrt(keyValue.length); //reducing space count
 	var arr = create2dArray(rows);
 	
@@ -551,11 +608,111 @@ function getDeterminant(matrix,n){
         getCofactor(matrix,cofactor,0,c,n);
    
 
-        det += Math.pow(-1,0+c)* matrix[0][c] * getDeterminant(cofactor,n-1);
+        det += Math.pow(-1,0+c)* matrix[0][c] * Math.abs(getDeterminant(cofactor,n-1));
       }
     return det;
 }
 
+function adjoint(matrix,adj){
+	var N = matrix.length;
 
+	if (N == 1){
+		adj[0][0] = 1;
+		return ;
+	}
+
+	var temp = create2dArray(N);
+
+	for (i =0 ; i<N ; i++){
+		for (j = 0; j<N; j++){
+			getCofactor(matrix,temp,i,j,N);
+			adj[j][i] = Math.pow(-1,i+j) * Math.abs(getDeterminant(temp,N-1));
+		}
+	}
+
+}
+
+
+function getInverseOfMatrix(matrix,det=0){
+		var N = matrix.length;
+
+		det = det == 0 ? Math.abs(getDeterminant(matrix,N)) : det;
+
+		var adj = create2dArray(N);
+		var inverse = create2dArray(N);
+
+		adjoint(matrix,adj);
+	//-------------------
+		var normalizingAdjoint = function (adjoint){ // negative value must be overlapped
+				for (i = 0 ; i < N ; i++){
+					for (j = 0 ; j < N ; j++){
+						adjoint[i][j] = (adjoint[i][j]+26) % 26;
+					}
+				}
+		}
+	//---------------------------
+
+		normalizingAdjoint(adj);
+
+		//overlapping by 26 so that no float value will be produced		
+		var i = 1;
+		while( (26*i+1)%det != 0)
+			i++;
+
+		var temp = (26*i+1)/det;
+
+		//
+
+		// multiplying (26*i)/det * adj; [since , 27 mod 26 == 1 ] 
+			 
+		for (var i = 0 ; i <N; i++){
+			for (var j = 0; j < N ; j++){
+				inverse[i][j] = (temp * adj[i][j]) % 26; 
+			}
+		}
+
+		return inverse ;
+}
+
+
+function matrixMultiplication(key,text){  // both key and text are matrix
+		var length = key.length;
+		var product = create2dArray(length);
+		var temp;
+		for (i = 0; i < length ; i++){
+			temp = 0;
+			for (j = 0 ; j < length ; j++){
+				temp += key[i][j]*text[j][0];
+			}
+			product[i][0] = temp % 26;
+
+		}
+
+		return product;
+
+}
+
+function isCoprime(num1,num2){
+	if (gcd(num1,num2)== 1)
+		return 1; //is coprime 
+	else 
+		return 0; //not coprime
+
+}
+
+function gcd(num1,num2){
+	var divisor = (num1 <= num2) ? num1 : num2;
+	var dividend = (num1 >= num2)? num1 : num2;
+	var rem = 0 ;
+
+	while(divisor != 0){
+		rem = dividend % divisor;
+		dividend = divisor;
+		divisor = rem;
+	}
+
+	return  dividend;
+
+}
 
 
