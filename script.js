@@ -29,7 +29,10 @@ function encryption(){
 							keyValue = document.getElementById('key').value;
 							ciphertxt = playFairEncryption(plainText,keyValue);
 							break;
-				
+			case "hillCipher":
+							keyValue = document.getElementById('key').value;
+							ciphertxt = hillEncryption(plainText,keyValue);
+							break;	
 			default :
 						alert("error");
 
@@ -172,6 +175,64 @@ function playFairEncryption(plaintxt,keyValue){
 		console.log(mappingKey);
 }
 */
+
+function hillEncryption(plaintxt,keyValue){
+	plaintxt = plaintxt.toUpperCase();
+
+	if (plaintxt.length % 2 != 0 )
+		plaintxt +='Z';
+
+
+	var keyValueMatrix = getHillKey(keyValue); //returns 2d matrix (Array)
+
+
+
+	var determinantOfKey = getDeterminant(keyValueMatrix/* array */,keyValueMatrix.length);
+	var plainTextMatrix = create2dArray(2);
+	var index = 0;
+	var index2 = 0; 
+	var product; // store the product of key and text;
+	var cipherText = '';
+	while (index < plaintxt.length){
+		for(i = 0 ; i < keyValueMatrix.length; i++) {// loop 0 to n (no of rows)
+			//converting ascii code into number
+			plainTextMatrix[i][0] = (plaintxt[index++].charCodeAt()-65);
+		}
+
+			productOfKeyAndText = matrixMultiplication(keyValueMatrix,plainTextMatrix);
+
+			// converting number into ascii code
+
+		for(i = 0 ; i < keyValueMatrix.length; i++) {// loop 0 to n (no of rows)
+			//converting ascii code into number
+			cipherText += String.fromCharCode(productOfKeyAndText[i][0]+65);
+		}
+
+	}
+
+	return cipherText;
+}
+
+
+function matrixMultiplication(key,text){  // both key and text are matrix
+		var length = key.length;
+		var product = create2dArray(length);
+		var temp;
+		for (i = 0; i < length ; i++){
+			temp = 0;
+			for (j = 0 ; j < length ; j++){
+				temp += key[i][j]*text[j][0];
+			}
+			product[i][0] = temp % 26;
+
+		}
+
+		return product;
+
+}
+
+
+
 
 
 function playFairEncryption(plaintxt,keyValue){
@@ -337,8 +398,8 @@ function frequencyAnalysis(cipherText,letter){ //char highest frequency characte
 
 //-----------------------------other functions------------------------------------------------------
 
-function getMappingKey(keyValue){
-
+function getMappingKey(keyValue){   //for play fair cipher
+ 
 	var alphabet = [];
 	var index = 0;
 	keyValue = keyValue.toUpperCase();
@@ -383,6 +444,35 @@ function getMappingKey(keyValue){
 
 }
 
+function getHillKey(keyValue){  // for hill cipher
+	
+// normalizing function-------- 
+	var Normalizing = function (keyValue){
+		keyValue = keyValue.split(',').join('');
+		keyValue = keyValue.split('][').join(' ');
+		keyValue = keyValue.split(' [').join('');
+		keyValue = keyValue.split('[').join('');
+		keyValue = keyValue.split(' ]').join('');
+		keyValue = keyValue.split(']').join('');
+		keyValue = keyValue.split('  ').join(' ');
+		keyValue = keyValue.split(' ');
+		return keyValue;
+	}
+
+//-----------------------------
+	keyValue = Normalizing(keyValue);
+	console.log(keyValue);
+	var rows = Math.sqrt(keyValue.length); //reducing space count
+	var arr = create2dArray(rows);
+	
+	for (i = 0 ; i < rows ; i++){
+		for (j = 0 ; j < rows ; j++){
+			arr[i][j] = Number(keyValue[i*rows+j]);
+		}
+	}
+	return arr;
+
+  }
 
 
 function splitIntoPairs(plaintxt){
@@ -419,3 +509,53 @@ function getIndexOf(mappingKey,value){
 						}
 		}
 }
+
+
+function create2dArray(rows){
+	var arr = new Array();
+
+	for (i = 0 ; i < rows; i++){
+			arr[i] = new Array();
+	}
+
+	return arr;
+}
+
+
+function getCofactor(matrix,cofactor,r,s,n){ //r s stores the position of rows and cols of a matrix for which cofactor is to produce
+  var i = 0;
+  var j = 0;
+    for (row = 0 ; row < n ; row++){
+      for (col = 0 ; col < n ; col++){
+            if (row != r && col != s){
+                cofactor[i][j++] = matrix[row][col];
+                if(j == n-1){
+                      j = 0;
+                      i++;
+                }
+            }
+      }
+    }
+}
+
+
+function getDeterminant(matrix,n){
+      var det = 0;
+      if (n==1)
+          return matrix[0][0];
+
+     var cofactor = create2dArray(n);
+
+      for (var c = 0 ; c < n ; c++){
+         
+        getCofactor(matrix,cofactor,0,c,n);
+   
+
+        det += Math.pow(-1,0+c)* matrix[0][c] * getDeterminant(cofactor,n-1);
+      }
+    return det;
+}
+
+
+
+
