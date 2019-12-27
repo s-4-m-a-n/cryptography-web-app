@@ -22,11 +22,13 @@ function encryption(){
 	switch(encryptionType){
 	
 			case "ceasar":
-							 ciphertxt = ceasarEncryption(plainText,keyValue);
+							keyValue =Number(document.getElementById('key').value);
+							ciphertxt = ceasarEncryption(plainText,keyValue);
 							break;
 			case "playFair":
-							 ciphertxt = playFairEncryption(plainText,keyValue);
-								break;
+							keyValue = document.getElementById('key').value;
+							ciphertxt = playFairEncryption(plainText,keyValue);
+							break;
 				
 			default :
 						alert("error");
@@ -44,20 +46,23 @@ function encryption(){
 
 function decryption(){
 	var encryptionType = document.querySelector('input[name="cipher"]:checked').value;
-	var keyValue = Number(document.getElementById('key').value);
 	var cipherText = document.getElementById('cipherText').value; 
-
+	var plaintxt;
+	var keyValue;
 	switch(encryptionType){
 		case "ceasar":
-				var plaintxt = ceasarDecryption(cipherText,keyValue);
-				resultShow.innerText = plaintxt;
+				keyValue = Number(document.getElementById('key').value); //takes number only 
+				plaintxt = ceasarDecryption(cipherText,keyValue);
 				break;
 		case "playFair":
-				alert("error");
+				keyValue = document.getElementById('key').value;
+				plaintxt = playFairDecryption(cipherText,keyValue);
 				break;
 		default :
 				alert("error");
 	}
+
+	resultShow.innerText = plaintxt;
 
 }
 
@@ -212,7 +217,43 @@ function playFairEncryption(plaintxt,keyValue){
    }
 
 
+   function playFairDecryption(cipherText,keyValue){
+   		cipherText = splitIntoPairs(cipherText);
 
+   		var mappingKey = getMappingKey(keyValue);
+   		var plainText = '';
+
+    var firstLetter ;
+    var secondLetter;
+    var indexOfFirst;
+    var indexOfSecond;
+
+    for (var i = 0 ; i < cipherText.length ; i++) {
+    		
+    		firstLetter = cipherText[i][0];
+    		secondLetter = cipherText[i][1];
+
+    		indexOfFirst = getIndexOf(mappingKey,firstLetter);
+    		indexOfSecond = getIndexOf(mappingKey,secondLetter);
+
+    		if (indexOfFirst.row == indexOfSecond.row ) { //same row
+    				plainText += mappingKey[indexOfFirst.row][((indexOfFirst.col-1)+5)%5];
+    				plainText += mappingKey[indexOfSecond.row][((indexOfSecond.col-1)+5)%5];
+    			}
+    		else if (indexOfFirst.col == indexOfSecond.col){ //same colm
+    				plainText += mappingKey[((indexOfFirst.row-1)+5)%5][indexOfFirst.col];
+    				plainText += mappingKey[((indexOfSecond.row-1)+5)%5][indexOfSecond.col];
+    		}
+    		else{  // adjacent
+    				plainText += mappingKey[indexOfFirst.row][indexOfSecond.col];
+    				plainText += mappingKey[indexOfSecond.row][indexOfFirst.col];
+    		}
+
+   	}
+   
+   return plainText;
+
+   }
 
 
 
